@@ -173,3 +173,7 @@ alias 9='cd -9'
 
 # use chinese in emacs GUI
 alias cemacs='LC_CTYPE=zh_CN.UTF-8 emacs'
+
+
+alias ass="export all_proxy=socks5://127.0.0.1:1080"
+alias nass="export all_proxy="
