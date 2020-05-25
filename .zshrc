@@ -188,3 +188,6 @@ alias cdwin='cd $WIN_PATH'
 alias countlines="find src/ -name \"*.ts\" | xargs cat | wc -l"
 # export PATH=$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin:$PATH
 export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+
+ssh-add ~/.ssh/ustc_gitlab 
+ssh-add ~/.ssh/github 
