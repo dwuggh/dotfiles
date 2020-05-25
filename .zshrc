@@ -140,6 +140,7 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+# alias vim='/usr/bin/vim'
 alias svim='nvim -u ~/.SpaceVim/vimrc'
 
 
@@ -177,3 +178,13 @@ alias cemacs='LC_CTYPE=zh_CN.UTF-8 emacs'
 
 alias ass="export all_proxy=socks5://127.0.0.1:1080"
 alias nass="export all_proxy="
+
+
+# windows partition alias
+export WIN_PATH='/mnt/windows/Users/dwuggh'
+alias cdwin='cd $WIN_PATH'
+
+
+alias countlines="find src/ -name \"*.ts\" | xargs cat | wc -l"
+# export PATH=$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin:$PATH
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
