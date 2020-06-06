@@ -142,6 +142,8 @@ fi
 source $ZSH/oh-my-zsh.sh
 # alias vim='/usr/bin/vim'
 alias svim='nvim -u ~/.SpaceVim/vimrc'
+alias eim='emacs -nw'
+alias g='git'
 
 
 if echo $(uname -r) | grep "microsoft"; then
@@ -182,12 +184,28 @@ alias nass="export all_proxy="
 
 # windows partition alias
 export WIN_PATH='/mnt/windows/Users/dwuggh'
-alias cdwin='cd $WIN_PATH'
+# alias cdwin='cd $WIN_PATH'
 
 
 alias countlines="find src/ -name \"*.ts\" | xargs cat | wc -l"
 # export PATH=$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin:$PATH
 export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
 
-ssh-add ~/.ssh/ustc_gitlab 
-ssh-add ~/.ssh/github 
+# alias slab=ssh-add ~/.ssh/ustc_gitlab
+# alias shub=ssh-add ~/.ssh/github
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
