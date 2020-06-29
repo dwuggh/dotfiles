@@ -27,7 +27,7 @@ antigen bundle pyenv
 antigen bundle ripgrep
 antigen bundle history
 antigen bundle alias-finder
-
+antigen bundle wting/autojump
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
@@ -142,7 +142,7 @@ fi
 source $ZSH/oh-my-zsh.sh
 # alias vim='/usr/bin/vim'
 alias svim='nvim -u ~/.SpaceVim/vimrc'
-alias eim='emacs -nw'
+alias eim='emacsclient -nw'
 alias g='git'
 
 
@@ -180,7 +180,9 @@ alias cemacs='LC_CTYPE=zh_CN.UTF-8 emacs'
 
 alias ass="export all_proxy=socks5://127.0.0.1:1080"
 alias nass="export all_proxy="
-
+alias pc="proxychains"
+alias q="exit"
+alias :q="exit"
 
 # windows partition alias
 export WIN_PATH='/mnt/windows/Users/dwuggh'
@@ -207,5 +209,11 @@ else
     fi
 fi
 unset __conda_setup
+alias clear=/usr/bin/clear
 # <<< conda initialize <<<
+export TERM=xterm-256color
+
+
+
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
