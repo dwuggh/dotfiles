@@ -1,0 +1,170 @@
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'sickill/vim-monokai'
+Plug 'jiangmiao/auto-pairs'
+Plug 'liuchengxu/vim-which-key'
+Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'puremourning/vimspector'
+Plug 'skywind3000/asynctasks.vim'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'lervag/vimtex'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'dracula/vim'
+Plug 'arcticicestudio/nord-vim'
+
+
+call plug#end()
+
+" keybinds
+inoremap <C-e> <C-o>A
+
+inoremap <C-b> <C-o>h
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-f> <C-o>l
+
+" ESC mapping
+inoremap jk <esc>
+inoremap kj <esc>
+vnoremap jk <esc>
+vnoremap kj <esc>
+cnoremap jk <esc>
+cnoremap kj <esc>
+onoremap jk <esc>
+onoremap kj <esc>
+
+" inoremap <slient><expr> <c-6> coc#refresh()
+if exists('*complete_info')
+  inoremap <expr> <tab> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+
+syntax enable
+colorscheme nord
+
+set nu
+set rnu
+set hlsearch
+set incsearch
+set ignorecase
+" set showcmd
+
+
+
+set showmatch
+set tabstop=4
+set noexpandtab
+set autoindent
+set cindent
+set smartindent
+set shiftwidth=2
+" set mouse=a
+set nocompatible
+" set clipboard+=unnamed
+set encoding=utf-8
+
+"fix monokai scrolling issue
+if &term =~ '256color'
+	" Disable Background Color Erase (BCE) so that color schemes
+	" work properly when Vim is used inside tmux and GNU screen."
+	set t_ut=
+endif
+
+" coc.nvim
+set hidden
+set nobackup
+set nowritebackup
+
+set cmdheight=2
+set updatetime=300
+" set shortmess+=c
+set signcolumn=yes
+
+
+
+
+" leader
+let g:mapleader = "\<SPACE>"
+let g:maplocalleader = ","
+
+set timeoutlen=100
+
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :WhichKey ','<CR>
+
+map <C-n> :NERDTreeToggle<CR>
+
+" nerdcommenter config
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+" nnoremap m <C-o>:call NERDComment(0,"toggle")<C-m>
+
+
+" fun! Redraw()
+  " let l = winline()
+  " let cmd = l * 2 <= winheight(0) + 1 ? l <= (&so + 1) ? 'zb' : 'zt' : 'zz'
+  " return cmd
+" endf
+
+" nnoremap <expr><c-l> Redraw()
+nnoremap <c-l> zz
+nnoremap <leader>fs :update<cr>
+
+
+
+" leader f
+let g:Lf_ShortcutF = "<leader>ff"
+noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>ss :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+
+" search visually selected text literally
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap go :<C-U>Leaderf! rg --recall<CR>
+
+
+" vimtex
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
