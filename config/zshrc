@@ -26,13 +26,18 @@ antigen bundle pylint
 antigen bundle pyenv
 antigen bundle ripgrep
 antigen bundle history
+antigen bundle cp
+antigen bundle copyfile
+antigen bundle emacs
 antigen bundle alias-finder
 antigen bundle wting/autojump
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
+antigen bundle esc/conda-zsh-completion
 
+antigen bundle pkulev/zsh-rustup-completion
 
 # antigen theme robbyrussell
 # antigen theme denysdovhan/spaceship-prompt
@@ -79,15 +84,15 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -105,7 +110,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git)
+# plugins=(cp copyfile emacs)
 
 
 # User configuration
@@ -116,11 +121,14 @@ DISABLE_AUTO_UPDATE="true"
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='mvim'
- fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+export EDITOR='vim'
+# export EDITOR="emacsclient -nw"
+
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -139,22 +147,20 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
-source $ZSH/oh-my-zsh.sh
-# alias vim='/usr/bin/vim'
 alias svim='nvim -u ~/.SpaceVim/vimrc'
-alias eim='emacsclient -nw'
+alias eim='emacsclient -nw -a vim'
 alias g='git'
 
 
 if echo $(uname -r) | grep "microsoft"; then
-	export WINDOWS_IP=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
-	export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0
-	export PULSE_SERVER=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
+    export WINDOWS_IP=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
+    export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0
+    export PULSE_SERVER=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`
 
-	export LIBGL_ALWAYS_INDIRECT=1
+    export LIBGL_ALWAYS_INDIRECT=1
 
-	export WIN_PATH='/mnt/c/Users/dwuggh'
-	alias cdwin='cd $WIN_PATH'
+    export WIN_PATH='/mnt/c/Users/dwuggh'
+    alias cdwin='cd $WIN_PATH'
 
 
 fi
@@ -171,30 +177,31 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
+alias f=fuck
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # use chinese in emacs GUI
-alias cemacs='LC_CTYPE=zh_CN.UTF-8 emacs'
+# alias cemacs='LC_CTYPE=zh_CN.UTF-8 emacs'
 
 
-alias ass="export all_proxy=socks5://127.0.0.1:1080"
-alias nass="export all_proxy="
+alias ass="export http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080 all_proxy=socks5://127.0.0.1:1080"
+alias nass="export http_proxy= https_proxy= all_proxy="
+# alias nass="export all_proxy="
+export GO111MODULE="on"
 alias pc="proxychains"
+
+
 alias q="exit"
 alias :q="exit"
 
 # windows partition alias
-export WIN_PATH='/mnt/windows/Users/dwuggh'
-# alias cdwin='cd $WIN_PATH'
+# export WIN_PATH='/mnt/windows/Users/dwuggh'
 
 
-alias countlines="find src/ -name \"*.ts\" | xargs cat | wc -l"
-# export PATH=$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin:$PATH
-export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.cargo/bin:$PATH"
 
-# alias slab=ssh-add ~/.ssh/ustc_gitlab
-# alias shub=ssh-add ~/.ssh/github
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -215,5 +222,52 @@ export TERM=xterm-256color
 
 
 
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
+# [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
+# export PATH="$HOME/.emacs.d/bin:$PATH"
+export EMACS_USER_DIRECTORY=~/.emacs.d
+
+# help shortcut
+# from binchen: https://emacs-china.org/t/archlinux-man-page/13790
+function m() {
+  $* --help | less
+}
+
+xo ()
+{
+    for var in "$@"; do
+        xdg-open "$var" &!;
+    done
+}
+
+# alias fzo="xdg-open $(fzf)"
+function fzo() {
+  xdg-open $(fzf)
+}
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+
+# replace ls with exa
+alias ls=exa
+
+vterm_printf(){
+    if [ -n "$TMUX" ]; then
+        # Tell tmux to pass the escape sequences through
+        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+
+eval $(thefuck --alias)
+
+
+export JULIA_PKG_SERVER=https://mirrors.ustc.edu.cn/julia
+
+export CARP_DIR=~/Projects/ThirdParty/Carp
+
+eval "$(fasd --init auto)"
